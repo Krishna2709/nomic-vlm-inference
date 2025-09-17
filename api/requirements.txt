@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pillow
+transformers
+torch==2.4.0+cu121 ; platform_system=="Linux"
+huggingface_hub
+# ColPali (install from git)
+git+https://github.com/illuin-tech/colpali.git@main

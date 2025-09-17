@@ -1,0 +1,44 @@
+name: build-colnomic-embed
+
+on:
+  push:
+    branches: [ main, initial-setup ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest   # amd64 host
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push (linux/amd64)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./api
+          push: true
+          platforms: linux/amd64
+          tags: ghcr.io/krishna2709/colnomic-embed:3b
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            MODEL_ID=nomic-ai/colnomic-embed-multimodal-3b
+            MODEL_REV=
+          secrets: |
+            "hf=${{ secrets.HF_TOKEN }}"
