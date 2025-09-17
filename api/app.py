@@ -1,6 +1,6 @@
 import os, io, time, uuid, base64, json
 from typing import List, Optional, Union
-from pydantic import FastAPI, HTTPException, Header
+from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel, Field
 import torch
 from PIL import Image
