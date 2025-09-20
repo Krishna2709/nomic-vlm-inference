@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel, Field
 import torch
 from PIL import Image
-from transformers.utils.import_utils import is_flash_attn2_available
+from transformers.utils.import_utils import is_flash_attn_2_available
 
 from colpali_engine.models import ColQwen2_5, ColQwen2_5_Processor
 
