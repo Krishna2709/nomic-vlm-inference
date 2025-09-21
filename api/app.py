@@ -22,12 +22,13 @@ device_map = "cuda:0" if torch.cuda.is_available() else ("mps" if torch.backends
 
 model = ColQwen2_5.from_pretrained(
     MODEL_ID,
+    local_files_only=True,
     revision=MODEL_REV,
     torch_dtype=DTYPE,
     device_map=device_map,
     attn_implementation="flash_attention_2" if is_flash_attn_2_available() else None,
 ).eval()
-processor = ColQwen2_5_Processor.from_pretrained(MODEL_ID)
+processor = ColQwen2_5_Processor.from_pretrained(MODEL_ID, local_files_only=True)
 
 class TextInput(BaseModel):
     texts: List[str] = Field(..., description="List of text inputs")
