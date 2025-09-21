@@ -13,9 +13,73 @@ A production-ready FastAPI service for generating embeddings from text and image
 - 🧪 **Testing**: Comprehensive unit tests with 90%+ coverage
 - 🔧 **DevOps**: CI/CD pipeline with automated testing and deployment
 
+## Docker Hub
+
+🐳 **Official Docker Image**: [`kirk07/colnomic-embed`](https://hub.docker.com/r/kirk07/colnomic-embed)
+
+> ✅ **Successfully Published**: The Docker image is now available on Docker Hub and ready for deployment!
+
+### Available Tags
+
+| Tag | Description | Size | Use Case |
+|-----|-------------|------|----------|
+| `latest` | Latest stable release | ~8GB | Production |
+| `3b` | ColNomic 3B model variant | ~8GB | Specific model version |
+
+### Image Details
+
+- **Base Image**: `pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime`
+- **Model**: ColPali ColQwen2.5 with LoRA adapter
+- **Architecture**: `linux/amd64`
+- **Port**: `8000`
+- **Health Check**: `GET /healthz`
+- **Memory**: ~8GB RAM recommended
+- **Storage**: ~8GB disk space
+- **Runtime Model Download**: Models downloaded at container startup
+
+### Quick Pull & Run
+
+```bash
+# Pull the latest image
+docker pull kirk07/colnomic-embed:latest
+
+# Run with basic configuration
+docker run -d \
+  --name colnomic-api \
+  -p 8000:8000 \
+  kirk07/colnomic-embed:latest
+
+# Test the API
+curl http://localhost:8000/healthz
+```
+
+### Docker Hub Features
+
+- ✅ **Production Ready**: Optimized for production deployment
+- ✅ **AMD64 Architecture**: Supports Linux AMD64 platforms
+- ✅ **Runtime Model Download**: Models downloaded at container startup
+- ✅ **Version Tags**: Multiple tags for different use cases
+- ✅ **Documentation**: Comprehensive usage examples
+- ✅ **Health Monitoring**: Built-in health check endpoints
+
 ## Quick Start
 
 ### Using Docker (Recommended)
+
+#### Option 1: Use Pre-built Image from Docker Hub
+
+```bash
+# Pull the official image
+docker pull kirk07/colnomic-embed:latest
+
+# Run the container
+docker run -p 8000:8000 kirk07/colnomic-embed:latest
+
+# Test the API
+curl http://localhost:8000/healthz
+```
+
+#### Option 2: Build from Source
 
 ```bash
 # Build the image
@@ -279,27 +343,91 @@ graph TD
 
 ## Deployment
 
-### Docker
+### Docker Compose (Recommended for Production)
 
-The service is containerized and ready for deployment:
+Create a `docker-compose.yml`:
 
-```dockerfile
-FROM pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime
-# ... (see api/Dockerfile)
+```yaml
+version: '3.8'
+
+services:
+  colnomic-api:
+    image: kirk07/colnomic-embed:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - INTERNAL_KEY=your-secret-key-here
+      - MAX_BATCH_ITEMS=64
+      - MAX_TEXT_LEN=2048
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 8G
+```
+
+Run with:
+```bash
+docker-compose up -d
+```
+
+### Docker Run (Simple Deployment)
+
+```bash
+# Basic deployment
+docker run -d \
+  --name colnomic-api \
+  -p 8000:8000 \
+  -e INTERNAL_KEY=your-secret-key \
+  kirk07/colnomic-embed:latest
+
+# With resource limits
+docker run -d \
+  --name colnomic-api \
+  -p 8000:8000 \
+  -e INTERNAL_KEY=your-secret-key \
+  --memory=16g \
+  --cpus=4 \
+  kirk07/colnomic-embed:latest
 ```
 
 ### Runpod Deployment
 
-1. Build and push Docker image
-2. Update Runpod template
-3. Deploy using Runpod API
-4. Monitor health endpoints
+1. **Use published Docker image**: `kirk07/colnomic-embed:latest`
+
+2. **Update Runpod template** with image: `kirk07/colnomic-embed:latest`
+
+3. **Deploy using Runpod API**:
+   ```bash
+   curl -X POST "https://api.runpod.io/v2/your-template-id/runsync" \
+     -H "Authorization: Bearer $RUNPOD_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "input": {
+         "docker_image": "kirk07/colnomic-embed:latest",
+         "env": {
+           "INTERNAL_KEY": "your-secret-key"
+         }
+       }
+     }'
+   ```
+
+4. **Monitor health endpoints**: `GET /healthz`
 
 ### Scaling
 
 - **Horizontal**: Multiple container instances behind load balancer
 - **Vertical**: Increase container resources (CPU/GPU)
 - **Batch Processing**: Increase `MAX_BATCH_ITEMS` for larger batches
+- **GPU Acceleration**: Use CUDA-enabled base image for faster inference
 
 ## Monitoring
 
