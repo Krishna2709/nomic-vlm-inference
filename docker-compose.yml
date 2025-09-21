@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  colnomic-api:
+    image: krishna2709/colnomic-embed:latest
+    container_name: colnomic-embed-api
+    ports:
+      - "8000:8000"
+    environment:
+      # Authentication (optional)
+      - INTERNAL_KEY=${INTERNAL_KEY:-}
+      
+      # Performance tuning
+      - MAX_BATCH_ITEMS=${MAX_BATCH_ITEMS:-64}
+      - MAX_TEXT_LEN=${MAX_TEXT_LEN:-2048}
+      
+      # Model configuration
+      - MODEL_ID=${MODEL_ID:-nomic-ai/colnomic-embed-multimodal-3b}
+      - MODEL_REV=${MODEL_REV:-}
+      - MODEL_DIR=${MODEL_DIR:-/models/3b}
+      
+      # Offline mode
+      - TRANSFORMERS_OFFLINE=1
+      - HF_HUB_DISABLE_TELEMETRY=1
+      - HF_DATASETS_OFFLINE=1
+      - HF_HOME=/models/3b
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 8G
+    # Uncomment for GPU support
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  # Optional: Add a reverse proxy for production
+  nginx:
+    image: nginx:alpine
+    container_name: colnomic-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - colnomic-api
+    restart: unless-stopped
+    profiles:
+      - production

@@ -43,13 +43,45 @@ clean:
 build:
 	docker build -t nomic-vlm-inference ./api/
 
+# Build and push to Docker Hub
+docker-build-push:
+	docker buildx build --platform linux/amd64 \
+		-t krishna2709/colnomic-embed:latest \
+		-t krishna2709/colnomic-embed:3b \
+		--push \
+		--build-arg MODEL_ID=nomic-ai/colnomic-embed-multimodal-3b \
+		--build-arg MODEL_REV= \
+		-f api/Dockerfile api
+
+# Build for multiple platforms
+docker-build-multi:
+	docker buildx build --platform linux/amd64,linux/arm64 \
+		-t krishna2709/colnomic-embed:latest \
+		-t krishna2709/colnomic-embed:3b \
+		--push \
+		--build-arg MODEL_ID=nomic-ai/colnomic-embed-multimodal-3b \
+		--build-arg MODEL_REV= \
+		-f api/Dockerfile api
+
 # Run API locally
 run:
 	cd api && uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 
-# Run Docker container
+# Run Docker container locally
 docker-run:
 	docker run --rm -p 8000:8000 nomic-vlm-inference
+
+# Run with Docker Compose
+compose-up:
+	docker-compose up -d
+
+# Stop Docker Compose
+compose-down:
+	docker-compose down
+
+# View logs
+logs:
+	docker-compose logs -f colnomic-api
 
 # Run all quality checks
 check: lint test
