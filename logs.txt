@@ -1,0 +1,212 @@
+2025-09-21T05:26:05.931022807Z Traceback (most recent call last):
+2025-09-21T05:26:05.931076212Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+2025-09-21T05:26:05.931079575Z     response.raise_for_status()
+2025-09-21T05:26:05.931081700Z   File "/opt/conda/lib/python3.11/site-packages/requests/models.py", line 1024, in raise_for_status
+2025-09-21T05:26:05.931160182Z     raise HTTPError(http_error_msg, response=self)
+2025-09-21T05:26:05.931199612Z requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/nomic-ai/colnomic-embed-multimodal-3b/resolve/1.0/config.json
+2025-09-21T05:26:05.931210365Z The above exception was the direct cause of the following exception:
+2025-09-21T05:26:05.931218775Z Traceback (most recent call last):
+2025-09-21T05:26:05.931223282Z   File "/opt/conda/lib/python3.11/site-packages/transformers/utils/hub.py", line 470, in cached_files
+2025-09-21T05:26:05.931305726Z     hf_hub_download(
+2025-09-21T05:26:05.931310132Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+2025-09-21T05:26:05.931362284Z     return fn(*args, **kwargs)
+2025-09-21T05:26:05.931396551Z            ^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.931399035Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1010, in hf_hub_download
+2025-09-21T05:26:05.931615650Z     return _hf_hub_download_to_cache_dir(
+2025-09-21T05:26:05.931643812Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.931645937Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1073, in _hf_hub_download_to_cache_dir
+2025-09-21T05:26:05.931854775Z     (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+2025-09-21T05:26:05.931958450Z                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.931960684Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1546, in _get_metadata_or_catch_error
+2025-09-21T05:26:05.932236262Z     metadata = get_hf_file_metadata(
+2025-09-21T05:26:05.932255217Z                ^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.932257117Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+2025-09-21T05:26:05.932306961Z     return fn(*args, **kwargs)
+2025-09-21T05:26:05.932348544Z            ^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.932366506Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1463, in get_hf_file_metadata
+2025-09-21T05:26:05.932598060Z     r = _request_wrapper(
+2025-09-21T05:26:05.932603573Z         ^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.932607676Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+2025-09-21T05:26:05.932674199Z     response = _request_wrapper(
+2025-09-21T05:26:05.932687899Z                ^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.932695279Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+2025-09-21T05:26:05.932760426Z     hf_raise_for_status(response)
+2025-09-21T05:26:05.932765866Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 416, in hf_raise_for_status
+2025-09-21T05:26:05.932843953Z     raise _format(RevisionNotFoundError, message, response) from e
+2025-09-21T05:26:05.932866924Z huggingface_hub.errors.RevisionNotFoundError: 404 Client Error. (Request ID: Root=1-68cf8c6d-2b70d5c06c7ead055737b53e;78a9c095-f397-4895-b849-9ab0f678506a)
+2025-09-21T05:26:05.932871061Z Revision Not Found for url: https://huggingface.co/nomic-ai/colnomic-embed-multimodal-3b/resolve/1.0/config.json.
+2025-09-21T05:26:05.932872928Z Invalid rev id: 1.0
+2025-09-21T05:26:05.932876438Z The above exception was the direct cause of the following exception:
+2025-09-21T05:26:05.932879979Z Traceback (most recent call last):
+2025-09-21T05:26:05.932888824Z   File "/opt/conda/bin/uvicorn", line 8, in <module>
+2025-09-21T05:26:05.932908616Z     sys.exit(main())
+2025-09-21T05:26:05.932927593Z              ^^^^^^
+2025-09-21T05:26:05.932929470Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 1157, in __call__
+2025-09-21T05:26:05.933110420Z     return self.main(*args, **kwargs)
+2025-09-21T05:26:05.933138933Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.933145379Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 1078, in main
+2025-09-21T05:26:05.933296349Z     rv = self.invoke(ctx)
+2025-09-21T05:26:05.933319367Z          ^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.933321496Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 1434, in invoke
+2025-09-21T05:26:05.933517409Z     return ctx.invoke(self.callback, **ctx.params)
+2025-09-21T05:26:05.933561194Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.933564618Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 783, in invoke
+2025-09-21T05:26:05.933684943Z     return __callback(*args, **kwargs)
+2025-09-21T05:26:05.933725262Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.933727862Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/main.py", line 415, in main
+2025-09-21T05:26:05.933823519Z     run(
+2025-09-21T05:26:05.933830392Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/main.py", line 582, in run
+2025-09-21T05:26:05.933904256Z     server.run()
+2025-09-21T05:26:05.933907784Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/server.py", line 67, in run
+2025-09-21T05:26:05.933948104Z     return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2025-09-21T05:26:05.934052638Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934069728Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/_compat.py", line 23, in asyncio_run
+2025-09-21T05:26:05.934107388Z     return runner.run(main)
+2025-09-21T05:26:05.934130684Z            ^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934135194Z   File "/opt/conda/lib/python3.11/asyncio/runners.py", line 118, in run
+2025-09-21T05:26:05.934195901Z     return self._loop.run_until_complete(task)
+2025-09-21T05:26:05.934251617Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934270091Z   File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+2025-09-21T05:26:05.934386461Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/server.py", line 71, in serve
+2025-09-21T05:26:05.934413531Z     await self._serve(sockets)
+2025-09-21T05:26:05.934418961Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/server.py", line 78, in _serve
+2025-09-21T05:26:05.934462794Z     config.load()
+2025-09-21T05:26:05.934469178Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/config.py", line 436, in load
+2025-09-21T05:26:05.934564036Z     self.loaded_app = import_from_string(self.app)
+2025-09-21T05:26:05.934603678Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934608346Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2025-09-21T05:26:05.934656591Z     module = importlib.import_module(module_str)
+2025-09-21T05:26:05.934698643Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934703488Z   File "/opt/conda/lib/python3.11/importlib/__init__.py", line 126, in import_module
+2025-09-21T05:26:05.934759426Z     return _bootstrap._gcd_import(name[level:], package, level)
+2025-09-21T05:26:05.934814927Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934839717Z   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+2025-09-21T05:26:05.934844247Z   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+2025-09-21T05:26:05.934849010Z   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+2025-09-21T05:26:05.934853080Z   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+2025-09-21T05:26:05.934856967Z   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+2025-09-21T05:26:05.934875497Z   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+2025-09-21T05:26:05.934911090Z   File "/app/app.py", line 23, in <module>
+2025-09-21T05:26:05.934915863Z     model = ColQwen2_5.from_pretrained(
+2025-09-21T05:26:05.934921016Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.934926473Z   File "/opt/conda/lib/python3.11/site-packages/colpali_engine/models/qwen2_5/colqwen2_5/modeling_colqwen2_5.py", line 35, in from_pretrained
+2025-09-21T05:26:05.934982896Z     return super().from_pretrained(*args, **kwargs, key_mapping=key_mapping)
+2025-09-21T05:26:05.935054306Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.935066040Z   File "/opt/conda/lib/python3.11/site-packages/transformers/modeling_utils.py", line 311, in _wrapper
+2025-09-21T05:26:05.935155673Z     return func(*args, **kwargs)
+2025-09-21T05:26:05.935181647Z            ^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.935186953Z   File "/opt/conda/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4473, in from_pretrained
+2025-09-21T05:26:05.935827886Z     resolved_config_file = cached_file(
+2025-09-21T05:26:05.935841062Z                            ^^^^^^^^^^^^
+2025-09-21T05:26:05.935846456Z   File "/opt/conda/lib/python3.11/site-packages/transformers/utils/hub.py", line 312, in cached_file
+2025-09-21T05:26:05.935937442Z     file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+2025-09-21T05:26:05.936009806Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:05.936023469Z   File "/opt/conda/lib/python3.11/site-packages/transformers/utils/hub.py", line 509, in cached_files
+2025-09-21T05:26:05.936129822Z     raise OSError(
+2025-09-21T05:26:05.936135542Z OSError: 1.0 is not a valid git identifier (branch name, tag name or commit id) that exists for this model name. Check the model page at 'https://huggingface.co/nomic-ai/colnomic-embed-multimodal-3b' for available revisions.
+2025-09-21T05:26:23.738696961Z Traceback (most recent call last):
+2025-09-21T05:26:23.738760289Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+2025-09-21T05:26:23.738769364Z     response.raise_for_status()
+2025-09-21T05:26:23.738774514Z   File "/opt/conda/lib/python3.11/site-packages/requests/models.py", line 1024, in raise_for_status
+2025-09-21T05:26:23.738925423Z     raise HTTPError(http_error_msg, response=self)
+2025-09-21T05:26:23.738935656Z requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://huggingface.co/nomic-ai/colnomic-embed-multimodal-3b/resolve/1.0/config.json
+2025-09-21T05:26:23.738945256Z The above exception was the direct cause of the following exception:
+2025-09-21T05:26:23.738953486Z Traceback (most recent call last):
+2025-09-21T05:26:23.738957993Z   File "/opt/conda/lib/python3.11/site-packages/transformers/utils/hub.py", line 470, in cached_files
+2025-09-21T05:26:23.739017956Z     hf_hub_download(
+2025-09-21T05:26:23.739044550Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+2025-09-21T05:26:23.739085483Z     return fn(*args, **kwargs)
+2025-09-21T05:26:23.739104836Z            ^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.739114879Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1010, in hf_hub_download
+2025-09-21T05:26:23.739294229Z     return _hf_hub_download_to_cache_dir(
+2025-09-21T05:26:23.739311960Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.739316220Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1073, in _hf_hub_download_to_cache_dir
+2025-09-21T05:26:23.739504048Z     (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+2025-09-21T05:26:23.739608353Z                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.739632580Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1546, in _get_metadata_or_catch_error
+2025-09-21T05:26:23.739826808Z     metadata = get_hf_file_metadata(
+2025-09-21T05:26:23.739834745Z                ^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.739840212Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+2025-09-21T05:26:23.739884379Z     return fn(*args, **kwargs)
+2025-09-21T05:26:23.739899345Z            ^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.739906309Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1463, in get_hf_file_metadata
+2025-09-21T05:26:23.740112882Z     r = _request_wrapper(
+2025-09-21T05:26:23.740119359Z         ^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.740123522Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 286, in _request_wrapper
+2025-09-21T05:26:23.740187502Z     response = _request_wrapper(
+2025-09-21T05:26:23.740196995Z                ^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.740201405Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 310, in _request_wrapper
+2025-09-21T05:26:23.740254759Z     hf_raise_for_status(response)
+2025-09-21T05:26:23.740260459Z   File "/opt/conda/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 416, in hf_raise_for_status
+2025-09-21T05:26:23.740390477Z     raise _format(RevisionNotFoundError, message, response) from e
+2025-09-21T05:26:23.740396599Z huggingface_hub.errors.RevisionNotFoundError: 404 Client Error. (Request ID: Root=1-68cf8c7f-0c8748e22c53101e4583af8d;1574c006-9068-4b1f-8b31-2ec74931d97d)
+2025-09-21T05:26:23.740405785Z Revision Not Found for url: https://huggingface.co/nomic-ai/colnomic-embed-multimodal-3b/resolve/1.0/config.json.
+2025-09-21T05:26:23.740410729Z Invalid rev id: 1.0
+2025-09-21T05:26:23.740419079Z The above exception was the direct cause of the following exception:
+2025-09-21T05:26:23.740427242Z Traceback (most recent call last):
+2025-09-21T05:26:23.740431512Z   File "/opt/conda/bin/uvicorn", line 8, in <module>
+2025-09-21T05:26:23.740439945Z     sys.exit(main())
+2025-09-21T05:26:23.740444119Z              ^^^^^^
+2025-09-21T05:26:23.740450757Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 1157, in __call__
+2025-09-21T05:26:23.740565639Z     return self.main(*args, **kwargs)
+2025-09-21T05:26:23.740581472Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.740585992Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 1078, in main
+2025-09-21T05:26:23.740721484Z     rv = self.invoke(ctx)
+2025-09-21T05:26:23.740728884Z          ^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.740735271Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 1434, in invoke
+2025-09-21T05:26:23.740907238Z     return ctx.invoke(self.callback, **ctx.params)
+2025-09-21T05:26:23.740926374Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.740953541Z   File "/opt/conda/lib/python3.11/site-packages/click/core.py", line 783, in invoke
+2025-09-21T05:26:23.741053721Z     return __callback(*args, **kwargs)
+2025-09-21T05:26:23.741081208Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741086027Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/main.py", line 415, in main
+2025-09-21T05:26:23.741163014Z     run(
+2025-09-21T05:26:23.741169317Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/main.py", line 582, in run
+2025-09-21T05:26:23.741234798Z     server.run()
+2025-09-21T05:26:23.741239997Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/server.py", line 67, in run
+2025-09-21T05:26:23.741272198Z     return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+2025-09-21T05:26:23.741362011Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741369828Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/_compat.py", line 23, in asyncio_run
+2025-09-21T05:26:23.741409688Z     return runner.run(main)
+2025-09-21T05:26:23.741427861Z            ^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741432226Z   File "/opt/conda/lib/python3.11/asyncio/runners.py", line 118, in run
+2025-09-21T05:26:23.741484786Z     return self._loop.run_until_complete(task)
+2025-09-21T05:26:23.741507878Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741512066Z   File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+2025-09-21T05:26:23.741590120Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/server.py", line 71, in serve
+2025-09-21T05:26:23.741609070Z     await self._serve(sockets)
+2025-09-21T05:26:23.741631910Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/server.py", line 78, in _serve
+2025-09-21T05:26:23.741644567Z     config.load()
+2025-09-21T05:26:23.741658107Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/config.py", line 436, in load
+2025-09-21T05:26:23.741740116Z     self.loaded_app = import_from_string(self.app)
+2025-09-21T05:26:23.741777557Z                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741781963Z   File "/opt/conda/lib/python3.11/site-packages/uvicorn/importer.py", line 19, in import_from_string
+2025-09-21T05:26:23.741823717Z     module = importlib.import_module(module_str)
+2025-09-21T05:26:23.741853956Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741861653Z   File "/opt/conda/lib/python3.11/importlib/__init__.py", line 126, in import_module
+2025-09-21T05:26:23.741914446Z     return _bootstrap._gcd_import(name[level:], package, level)
+2025-09-21T05:26:23.741956396Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.741962940Z   File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+2025-09-21T05:26:23.741969697Z   File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+2025-09-21T05:26:23.741973826Z   File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+2025-09-21T05:26:23.741980540Z   File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+2025-09-21T05:26:23.741984626Z   File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+2025-09-21T05:26:23.741988826Z   File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+2025-09-21T05:26:23.741994370Z   File "/app/app.py", line 23, in <module>
+2025-09-21T05:26:23.742032897Z     model = ColQwen2_5.from_pretrained(
+2025-09-21T05:26:23.742044367Z             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.742049566Z   File "/opt/conda/lib/python3.11/site-packages/colpali_engine/models/qwen2_5/colqwen2_5/modeling_colqwen2_5.py", line 35, in from_pretrained
+2025-09-21T05:26:23.742082766Z     return super().from_pretrained(*args, **kwargs, key_mapping=key_mapping)
+2025-09-21T05:26:23.742146947Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.742158647Z   File "/opt/conda/lib/python3.11/site-packages/transformers/modeling_utils.py", line 311, in _wrapper
+2025-09-21T05:26:23.742231137Z     return func(*args, **kwargs)
+2025-09-21T05:26:23.742248960Z            ^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.742265162Z   File "/opt/conda/lib/python3.11/site-packages/transformers/modeling_utils.py", line 4473, in from_pretrained
+2025-09-21T05:26:23.742818682Z     resolved_config_file = cached_file(
+2025-09-21T05:26:23.742830656Z                            ^^^^^^^^^^^^
+2025-09-21T05:26:23.742834795Z   File "/opt/conda/lib/python3.11/site-packages/transformers/utils/hub.py", line 312, in cached_file
+2025-09-21T05:26:23.742912565Z     file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+2025-09-21T05:26:23.742979732Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-09-21T05:26:23.742993956Z   File "/opt/conda/lib/python3.11/site-packages/transformers/utils/hub.py", line 509, in cached_files
+2025-09-21T05:26:23.743096896Z     raise OSError(
+2025-09-21T05:26:23.743106641Z OSError: 1.0 is not a valid git identifier (branch name, tag name or commit id) that exists for this model name. Check the model page at 'https://huggingface.co/nomic-ai/colnomic-embed-multimodal-3b' for available revisions.

@@ -1,0 +1,13 @@
+{
+    "name": "colnomic-embed-worker",
+    "private": true,
+    "devDependencies": {
+      "wrangler": "^3.72.0",
+      "typescript": "^5.4.5",
+      "@cloudflare/workers-types": "^4.20241218.0"
+    },
+    "scripts": {
+      "dev": "wrangler dev",
+      "deploy": "wrangler deploy"
+    }
+  }

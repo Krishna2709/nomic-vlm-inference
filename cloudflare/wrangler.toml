@@ -1,0 +1,15 @@
+name = "colnomic-embed-worker"
+main = "worker/index.ts"
+compatibility_date = "2024-09-01"
+
+# Route your domain to the Worker
+routes = [
+  { pattern = "embed.yourdomain.com/*", zone_name = "yourdomain.com" }
+]
+
+[vars]
+# Set a placeholder; override with secrets in CI or 'wrangler secret put'
+RUNPOD_URL = "https://api.runpod.ai/v2/<your-endpoint-id>"
+
+# Secrets:
+# wrangler secret put INTERNAL_KEY
