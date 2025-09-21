@@ -19,12 +19,45 @@ ARG MODEL_REV=""
 RUN --mount=type=secret,id=hf \
     python3 - <<'PY'
 import os
+import json
 from huggingface_hub import snapshot_download
 mid = os.environ.get("MODEL_ID")
 rev = os.environ.get("MODEL_REV") or None
 tok = os.environ.get("HF_TOKEN")  # provided via BuildKit secret if needed
-snapshot_download(repo_id=mid, revision=rev, local_dir="/models/3b", use_auth_token=tok)
-print("Baked model to /models/3b")
+print(f"Downloading model {mid} (rev: {rev}) to /models/3b")
+
+# Download the adapter model first
+snapshot_download(
+    repo_id=mid, 
+    revision=rev, 
+    local_dir="/models/3b", 
+    use_auth_token=tok,
+    local_files_only=False  # Allow download during build
+)
+
+# Read the adapter config to get the base model
+with open("/models/3b/adapter_config.json", "r") as f:
+    adapter_config = json.load(f)
+base_model = adapter_config.get("base_model_name_or_path")
+print(f"Base model: {base_model}")
+
+# Download the base model
+if base_model:
+    print(f"Downloading base model {base_model} to /models/base")
+    snapshot_download(
+        repo_id=base_model,
+        local_dir="/models/base",
+        use_auth_token=tok,
+        local_files_only=False
+    )
+
+print("Successfully baked models")
+print("Files in /models/3b:")
+for f in sorted(os.listdir("/models/3b")):
+    print(f"  {f}")
+print("Files in /models/base:")
+for f in sorted(os.listdir("/models/base")):
+    print(f"  {f}")
 PY
 
 # Let the app know to load locally and avoid network at runtime
@@ -32,7 +65,9 @@ ENV MODEL_ID=${MODEL_ID} \
     MODEL_REV=${MODEL_REV} \
     MODEL_DIR=/models/3b \
     TRANSFORMERS_OFFLINE=1 \
-    HF_HUB_DISABLE_TELEMETRY=1
+    HF_HUB_DISABLE_TELEMETRY=1 \
+    HF_HOME=/models/3b \
+    HF_DATASETS_OFFLINE=1
 
 # ---- App code ----
 COPY app.py /app/app.py

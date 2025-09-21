@@ -1,8 +1,24 @@
-fastapi
-uvicorn[standard]
-pillow
-transformers
+# Production dependencies
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+pillow>=9.0.0
+transformers>=4.30.0
 torch>=2.5.0 ; platform_system=="Linux"
-huggingface_hub
+huggingface_hub>=0.15.0
+peft>=0.4.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+
 # ColPali (install from git)
 git+https://github.com/illuin-tech/colpali.git@main
+
+# Development dependencies (uncomment for development)
+# pytest>=7.0.0
+# pytest-asyncio>=0.21.0
+# pytest-cov>=4.0.0
+# httpx>=0.24.0
+# black>=23.0.0
+# isort>=5.12.0
+# flake8>=6.0.0
+# mypy>=1.0.0
+# pre-commit>=3.0.0
