@@ -223,6 +223,15 @@ def _load_b64(imgs: List[str]) -> List[Image.Image]:
     return out
 
 
+@app.get("/")
+def root():
+    return {"ok": True, "endpoints": ["/ping", "/healthz", "/v1/embed"]}
+    
+@app.get("/ping")
+def ping():
+    return {"ok": True}
+
+
 @app.get("/healthz")
 def healthz() -> Dict[str, Union[bool, str]]:
     """
