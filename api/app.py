@@ -1,5 +1,5 @@
 import os, io, time, uuid, base64, json
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Any
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel, Field
 import torch
@@ -11,20 +11,22 @@ from colpali_engine.models import ColQwen2_5, ColQwen2_5_Processor
 MODEL_ID  = os.getenv("MODEL_ID", "nomic-ai/colnomic-embed-multimodal-3b")
 MODEL_REV = os.getenv("MODEL_REV")
 INTERNAL_KEY = os.getenv("INTERNAL_KEY")  # Cloudflare->origin shared secret
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 DTYPE  = torch.bfloat16 if (DEVICE == "cuda" and torch.cuda.is_bf16_supported()) else torch.float16
 
 MAX_BATCH = int(os.getenv("MAX_BATCH_ITEMS", "64"))
 MAX_TEXT_LEN = int(os.getenv("MAX_TEXT_LEN", "2048"))
 
-attn_impl = "flash_attn_2" if is_flash_attn2_available() else None
+# Set device_map based on available hardware
+device_map = "cuda:0" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+
 model = ColQwen2_5.from_pretrained(
     MODEL_ID,
     revision=MODEL_REV,
     torch_dtype=DTYPE,
-    device=DEVICE,
-    attn_impl=attn_impl
-)
+    device_map=device_map,
+    attn_implementation="flash_attention_2" if is_flash_attn_2_available() else None,
+).eval()
 processor = ColQwen2_5_Processor.from_pretrained(MODEL_ID)
 
 class TextInput(BaseModel):
@@ -45,7 +47,7 @@ class EmbedRequest(BaseModel):
 class EmbedResponse(BaseModel):
     model: str
     variant: str
-    data: List[Union[List[List[float]], List[float]]]
+    data: List[Any]  # More flexible to handle both dense and col variants
     usage: dict
 
 app = FastAPI(title="ColNomic Multimodal Embeddings", version="1.0")
@@ -91,11 +93,14 @@ def embed(req: EmbedRequest, x_internal_key: Optional[str] = Header(None)):
             raise HTTPException(400, "provide image_b64")
         if req.input.image_urls:
             raise HTTPException(400, "image_urls disabled; send base64")
-        imgs = _load_b64(req.input.image_b64 or [])
-        if not imgs or len(imgs) > MAX_BATCH: raise HTTPException(413, f"Batch 1..{MAX_BATCH}")
-        batch = processor.process_images(imgs).to(model.device)
-        with torch.no_grad(): mv = model(**batch)
-        mv_outputs = list(mv) if isinstance(mv, (list, tuple)) else [mv]
+        try:
+            imgs = _load_b64(req.input.image_b64 or [])
+            if not imgs or len(imgs) > MAX_BATCH: raise HTTPException(413, f"Batch 1..{MAX_BATCH}")
+            batch = processor.process_images(imgs).to(model.device)
+            with torch.no_grad(): mv = model(**batch)
+            mv_outputs = list(mv) if isinstance(mv, (list, tuple)) else [mv]
+        except Exception as e:
+            raise HTTPException(500, f"Image processing error: {str(e)}")
 
     res = []
     for item in mv_outputs:
